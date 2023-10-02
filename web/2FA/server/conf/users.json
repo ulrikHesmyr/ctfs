@@ -6,8 +6,8 @@
         "admin": true
       },
       {
-        "username": "OlePer34",
-        "password": "passord",
+        "username": "Flyttern",
+        "password": "Fido",
         "admin": false
       },
       {
@@ -16,4 +16,4 @@
         "admin": false
       }
     ]
-  }
+}

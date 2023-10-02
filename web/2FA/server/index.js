@@ -4,6 +4,8 @@ require('dotenv').config();
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -13,16 +15,54 @@ const limiter = rateLimit({
 const {PORT} = process.env;
 
 app.use(limiter);
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(router);
 
-router.post("/api", async (req, res) => {
+router.post("/api/login", async (req, res) => {
+    let foundUser = false;
+    let userFound = null;
+
     const userData = require("./conf/users.json");
-    console.log(userData.users);
-    console.log(req.body);
-    return res.send({userdata:userData});
+    userData.users.forEach(user => {
+        if(user.username === req.body.username && user.password === req.body.password){
+            foundUser = true;
+            userFound = user;   
+        } 
+    });
+
+    //Hvis vi har funnet en bruker med riktig brukernavn og passord
+    if(foundUser){
+        //Hvis brukeren er admin, generer en PIN og send den til brukeren for "2FA"
+        if(userFound.admin){
+
+            //Genererer en PIN og token som er generert med jwt
+            const pin = Math.floor(Math.random() * 10000);
+            const token = jwt.sign({PIN:pin}, process.env.TOKEN_SECRET, {expiresIn: "1h"});
+
+            //Legger token i cookie
+            return res.cookie("twoFA_PIN", token, httpOnly=true).json({twoFA: true});
+
+            //Hvis ikke brukeren er admin, så sender vi datae for alle brukere til klienten
+        } else {
+            return res.json({message: "Logget inn!", userData: userData, valid: true});
+        }
+    } else {
+        return res.send({message: "Feil brukernavn eller passord!"})
+    }
 });
+
+router.post("/api/twoFA", async (req, res) => {
+    const {PIN} = jwt.verify(req.cookies.twoFA_PIN, process.env.TOKEN_SECRET);
+    
+    let pin = parseInt(req.body.pin);
+    if(parseInt(PIN) === pin){
+        return res.json({valid: true, message: "Logget inn!", flag:"CTF{f1nal1y_1_f0und_th3_fl4g_0-0-0_}"});
+    } else {
+        return res.json({valid: false, message: "Feil PIN-kode!"});
+    }
+})
 
 
 app.use(express.static('../static'));
@@ -46,6 +86,10 @@ app.get("/auth", (req, res)=>{
 
 app.get("/robots.txt", (req, res) => {
     res.sendFile(path.join(__dirname, './conf/robots.txt'));
+})
+
+app.get("/api/users.json", (req, res)=>{
+    res.sendFile(path.join(__dirname, './conf/users.json'));
 })
 
 app.get("/", (req, res) => {

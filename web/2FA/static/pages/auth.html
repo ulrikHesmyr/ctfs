@@ -8,7 +8,7 @@
 </head>
 <body>
     <label for="username">Brukernavn: </label>
-    <input type="text" name="username" placeholder="OlePer34">
+    <input type="text" name="username" placeholder="brukernavn">
     <label for="password">Passord: </label>
     <input type="password" name="password" placeholder="passord">   
     <button onclick="auth()">Logg inn</button>
@@ -21,7 +21,7 @@
                 password: document.querySelector("input[name=password]").value
             }
             console.log(data)
-            const req = await fetch("/api", {
+            const req = await fetch("/api/login", {
                 method:"POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -30,7 +30,29 @@
             })
 
             const res = await req.json()
-            console.log(res)
+            if(res.valid){
+                document.write(res.message + "<br>");
+                document.write("Error, Fil ikke funnet: $PATH/api/users.json");
+            } else if(res.twoFA){
+                const pin = window.prompt("2FA PIN: ");
+                console.log(pin);
+                const req = await fetch("/api/twoFA", {
+                    method:"POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({pin})
+                })
+
+                const res = await req.json();
+                if(res.valid){
+                    document.write(res.flag);
+                } else {
+                    document.write(res.message);
+                }
+            } else {
+                document.write(res.message);
+            }
         }
     </script>
 </body>
