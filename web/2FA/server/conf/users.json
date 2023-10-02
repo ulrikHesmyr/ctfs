@@ -1,0 +1,19 @@
+{
+    "users": [
+      {
+        "username": "admin",
+        "password": "0-0-0_dart_Monkey",
+        "admin": true
+      },
+      {
+        "username": "OlePer34",
+        "password": "passord",
+        "admin": false
+      },
+      {
+        "username": "user3",
+        "password": "password3",
+        "admin": false
+      }
+    ]
+  }

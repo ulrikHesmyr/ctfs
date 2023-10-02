@@ -1,0 +1,246 @@
+/* UNIVERSALT */
+
+*{
+    font-family: monospace;
+    --sekunder: #ffa600;
+    --sekunder2: #ffa6007e;
+}
+
+nav, img{
+    user-select: none;
+}
+
+body {
+    margin: 0;
+}
+main, footer {
+    /* animation: flyInn 1s ease; */
+    position: relative;
+    z-index: 2;
+}
+
+
+main, footer, header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* HEADER */
+
+
+header {
+    position: relative;
+    flex-direction: column;
+    z-index: 3;
+    background-color: white;
+    box-shadow: -1px 1px 5px 0px rgba(0,0,0,0.4);
+    gap:2rem;
+    justify-content: space-between;
+    padding-top:3rem;
+}
+
+nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: rgba(255,255,255,1);
+    position:-webkit-sticky; 
+    position:sticky; 
+    top:0;
+    z-index: 4;
+}
+
+
+.sticky {
+    box-shadow: -1px 1px 5px 0px rgba(0,0,0,0.4);
+    background-color: rgba(255,255,255,0.8);
+}
+
+header div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:1rem;
+    padding: 1rem;
+}
+
+/* LISTER */
+
+li {
+    list-style-position:inside ;
+}
+
+/* LINKER */
+
+a {
+    transition: 0.2s ease all;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color:var(--sekunder);
+}
+
+a.active {
+    box-shadow: inset 0px -4px 0px 0px var(--sekunder);
+    -webkit-clip-path: polygon(100% 0, 100% 93%, 100% 100%, 0 100%, 0 0);
+clip-path: polygon(100% 0, 100% 93%, 100% 100%, 0 100%, 0 0);
+}
+
+
+a.active:hover {
+    box-shadow: inset 0px -4px 0px 0px var(--sekunder);
+}
+
+
+nav a {
+    padding:1rem;
+    transition: 0.2s ease all;
+    -webkit-clip-path: polygon(100% 0, 100% 93%, 0 94%, 0 100%, 0 0);
+    clip-path: polygon(100% 0, 100% 93%, 0 94%, 0 100%, 0 0);
+}
+
+nav a:hover {
+    box-shadow: inset 0px -2px 0px 0px var(--sekunder);
+    -webkit-clip-path: polygon(100% 0, 100% 93%, 100% 100%, 0 100%, 0 0);
+clip-path: polygon(100% 0, 100% 93%, 100% 100%, 0 100%, 0 0);
+}
+
+
+
+/*BILDER */
+
+
+#logo {
+    height:5rem;
+}
+
+.imagecontainer{
+    position: relative;
+    width: 100%;
+    margin: 0;
+    height: calc(100vw * 0.35);
+    z-index: 1;
+    overflow: hidden;
+    animation: flyInn 1s ease-out;
+}
+.image{
+    z-index: inherit;
+    width: 100%;
+    filter: sepia(0.3);
+    position: absolute;
+    top:-20%;
+}
+
+/* OVERSKRIFTER */
+
+h2::after {
+    content: " ";
+    display: block;
+    background-color: black;
+    width:2rem;
+    height:2px;
+}
+
+/* TEXT */
+
+main section{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    position: relative;
+    z-index: 3;
+    background-color: white;
+    
+}
+
+
+.section-active {
+    transition: 1s ease all;
+    visibility: visible;
+    opacity: 1;
+}
+.section-active:nth-child(even) {
+    animation: sectionsanimasjonHoyre 1s ease;
+}
+
+.section-active:nth-child(odd) {
+    animation: sectionsanimasjonVenstre 1s ease;
+}
+
+.section-inactive {
+    transition: 1s ease all;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.section-inactive:nth-child(even) {
+    animation: sectionTilbakeHoyre 1s ease;
+    
+}
+
+.section-inactive:nth-child(odd) {
+    animation: sectionTilbakeVenstre 1s ease;
+}
+
+
+
+/* ANIMASJONER */
+
+
+@keyframes flyInn {
+    0% {
+        transform: translateY(-10%);
+        -webkit-transform: translateY(-10%);
+    }
+    100% {
+        transform: translateY(0);
+        -webkit-transform: translateY(0);
+    }
+}
+
+@keyframes sectionsanimasjonHoyre {
+    0% {
+        transform: translateX(-20%);
+        -webkit-transform: translateX(-20%);
+    }
+    100% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+    }
+}
+
+@keyframes sectionsanimasjonVenstre {
+    0% {
+        transform: translateX(20%);
+        -webkit-transform: translateX(20%);
+    }
+    100% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+    }
+}
+
+@keyframes sectionTilbakeHoyre {
+    0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-20%);
+        -webkit-transform: translateX(-20%);
+    }
+}
+
+@keyframes sectionTilbakeVenstre {
+    0% {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+    }
+    100% {
+        transform: translateX(20%);
+        -webkit-transform: translateX(20%);
+    }
+}

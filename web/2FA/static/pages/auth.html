@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth | protected</title>
+    
+</head>
+<body>
+    <label for="username">Brukernavn: </label>
+    <input type="text" name="username" placeholder="OlePer34">
+    <label for="password">Passord: </label>
+    <input type="password" name="password" placeholder="passord">   
+    <button onclick="auth()">Logg inn</button>
+
+    <script>
+
+        async function auth(){
+            const data = {
+                username: document.querySelector("input[name=username]").value,
+                password: document.querySelector("input[name=password]").value
+            }
+            console.log(data)
+            const req = await fetch("/api", {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+
+            const res = await req.json()
+            console.log(res)
+        }
+    </script>
+</body>
+</html>
