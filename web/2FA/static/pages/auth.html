@@ -34,22 +34,46 @@
                 document.write(res.message + "<br>");
                 document.write("Error, Fil ikke funnet: $PATH/api/users.json");
             } else if(res.twoFA){
-                const pin = window.prompt("2FA PIN: ");
-                console.log(pin);
-                const req = await fetch("/api/twoFA", {
-                    method:"POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({pin})
-                })
+                // Create a div element
+                var divElement = document.createElement("div");
 
-                const res = await req.json();
-                if(res.valid){
-                    document.write(res.flag);
-                } else {
-                    document.write(res.message);
-                }
+                // Set the text content of the div
+                divElement.textContent = "For sikkerhetens skyld, så har vi sendt deg 2FA PIN på SMS:";
+
+                // Create an input element
+                var inputElement = document.createElement("input");
+                var buttonElement = document.createElement("button");
+
+                buttonElement.textContent = "Send inn";
+
+                // Set the input type to text (you can change it to 'password' if needed)
+                inputElement.type = "text";
+
+                // Append the div and input elements to the body of the document (you can change the target element)
+                document.body.appendChild(divElement);
+                document.body.appendChild(inputElement);
+                document.body.appendChild(buttonElement);
+
+                //const pin = window.prompt("For sikkerhetens skyld, så har vi sendt deg 2FA PIN på SMS: ");
+                buttonElement.addEventListener("click", async ()=>{
+                    const pin = inputElement.value;
+                    
+                    const req = await fetch("/api/twoFA", {
+                        method:"POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({pin})
+                    })
+
+                    const res = await req.json();
+                    if(res.valid){
+                        document.write(res.flag);
+                    } else {
+                        document.write(res.message);
+                    }
+
+                })
             } else {
                 document.write(res.message);
             }
