@@ -21,9 +21,6 @@ app.use(express.json());
 app.use(router);
 
 router.post("/api/login", async (req, res) => {
-    console.log(req.headers);
-    console.log(req.socket.remoteAddress);
-    console.log(req.headers['x-forwarded-for'], req.socket.remoteAddress)
     let foundUser = false;
     let userFound = null;
 
