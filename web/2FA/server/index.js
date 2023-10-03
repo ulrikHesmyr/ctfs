@@ -46,10 +46,12 @@ router.post("/api/login", async (req, res) => {
 
             //Hvis ikke brukeren er admin, så sender vi datae for alle brukere til klienten
         } else {
-            return res.json({message: "Logget inn!", userData: userData, valid: true});
+            const token = jwt.sign({brukernavn: userFound.username}, process.env.TOKEN_SECRET, {expiresIn: "1h"});
+
+            return res.cookie("login_token", token).json({message: "Logget inn!", userData: userData, valid: true});
         }
     } else {
-        return res.send({message: "Feil brukernavn eller passord!"})
+        return res.json({message: "Feil brukernavn eller passord!"})
     }
 });
 
@@ -89,8 +91,17 @@ app.get("/robots.txt", (req, res) => {
 })
 
 app.get("/api/users.json", (req, res)=>{
-    res.sendFile(path.join(__dirname, './conf/users.json'));
-})
+    if(!req.cookies.login_token){
+        return res.send("Not valid login credentials");
+    }
+
+    const token = jwt.verify(req.cookies.login_token, process.env.TOKEN_SECRET);
+    if(token){
+        res.sendFile(path.join(__dirname, './conf/users.json'));
+    } else {
+        res.send("Not valid login credentials");
+    }
+});
 
 app.get("/", (req, res) => {
     
