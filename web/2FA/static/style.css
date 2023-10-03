@@ -10,6 +10,10 @@ nav, img{
     user-select: none;
 }
 
+span {
+    text-decoration: underline dashed 1px;
+}
+
 body {
     margin: 0;
 }
@@ -100,6 +104,7 @@ nav a {
     transition: 0.2s ease all;
     -webkit-clip-path: polygon(100% 0, 100% 93%, 0 94%, 0 100%, 0 0);
     clip-path: polygon(100% 0, 100% 93%, 0 94%, 0 100%, 0 0);
+    text-align: center;
 }
 
 nav a:hover {
@@ -117,11 +122,15 @@ clip-path: polygon(100% 0, 100% 93%, 100% 100%, 0 100%, 0 0);
     height:5rem;
 }
 
+.primaer {
+    width:90%;
+}
+
 .imagecontainer{
     position: relative;
     width: 100%;
     margin: 0;
-    height: calc(100vw * 0.35);
+    height: calc(100vw * 0.3);
     z-index: 1;
     overflow: hidden;
     animation: flyInn 1s ease-out;

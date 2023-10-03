@@ -19,6 +19,7 @@ function imageTranslate() {
     
     images.forEach((image)=>{
         image.style.transform = `translateY(${window.scrollY / 6}px)`;
+        image.style.webkitTransfom = `translateY(${window.scrollY / 6}px)`;
     })
 }
 

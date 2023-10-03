@@ -32,7 +32,7 @@
             const res = await req.json()
             if(res.valid){
                 document.write(res.message + "<br>");
-                document.write("Error, Fil ikke funnet: $PATH/api/users.json");
+                document.write("Feilmelding: Fil ikke funnet: $PATH/api/users.jsom");
             } else if(res.twoFA){
                 // Create a div element
                 var divElement = document.createElement("div");
