@@ -34,6 +34,8 @@ router.post("/api/login", async (req, res) => {
 
     //Hvis vi har funnet en bruker med riktig brukernavn og passord
     if(foundUser){
+
+        console.log("Logget inn som " + userFound.username + " from: " + req.socket.remoteAddress);
         //Hvis brukeren er admin, generer en PIN og send den til brukeren for "2FA"
         if(userFound.admin){
 
