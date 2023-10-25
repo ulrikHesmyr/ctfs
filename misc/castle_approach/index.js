@@ -14,7 +14,7 @@ async function ipValidation(req,res,next){
     let funn = false;
 
     //Henter IP-addressen fra requesten
-    let ipstring = req.headers["X-Forwarded-For"] || req.socket.remoteAddress;
+    let ipstring = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     //Henter alle danske IP-ranges
     const request = await fetch("https://cdn-lite.ip2location.com/datasets/DK.json?_=1698242664612");
