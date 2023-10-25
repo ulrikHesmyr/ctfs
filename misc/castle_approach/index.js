@@ -3,7 +3,7 @@ require('dotenv').config();
 const app = express();
 const path = require('path');
 
-const {FLAG, ENV, LOGINROUTE} = process.env;
+const {FLAG, ENV, LOGINROUTE, PORT} = process.env;
 
 
 
@@ -75,6 +75,6 @@ app.get('/', (req, res) => {
     return res.sendFile(path.join(__dirname, "build", "index.html"))
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('Server listening on port 3000');
 });
