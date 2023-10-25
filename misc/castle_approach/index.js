@@ -2,7 +2,6 @@ const express = require('express');
 require('dotenv').config();
 const app = express();
 const path = require('path');
-const helmet = require("helmet");
 
 const {FLAG, ENV, LOGINROUTE, PORT} = process.env;
 
@@ -41,7 +40,6 @@ async function ipValidation(req,res,next){
     
 }
 
-app.use(helmet());
 app.use(ipValidation);
 app.use(express.json());
 app.use(express.static("build"));
