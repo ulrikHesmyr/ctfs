@@ -26,7 +26,8 @@ async function ipValidation(req,res,next){
 
     //Går igjennom alle danske IP-addresser og ser etter en match med "ipstring" fra brukeren
     for(let i = 0; i < danishIPRanges.data.length; i++){
-        if(danishIPRanges.data[i][0].split(".").splice(0, 2) === ipstring.split(".").splice(0, 2)){
+        
+        if(danishIPRanges.data[i][0].split(".").splice(0, 2)[0] == ipstring.split(".").splice(0, 2)[0] && danishIPRanges.data[i][0].split(".").splice(0, 2)[1] == ipstring.split(".").splice(0, 2)[1]){
             funn = true;
             break;
         }
@@ -76,5 +77,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log('Server listening on port 3000');
+    console.log('Server listening on port ' + PORT);
 });
