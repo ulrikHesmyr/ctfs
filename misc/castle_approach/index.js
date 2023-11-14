@@ -26,7 +26,7 @@ async function ipValidation(req,res,next){
 
     //Går igjennom alle danske IP-addresser og ser etter en match med "ipstring" fra brukeren
     for(let i = 0; i < danishIPRanges.data.length; i++){
-        if(danishIPRanges.data[i][0] == ipstring || danishIPRanges.data[i][1] == ipstring){
+        if(danishIPRanges.data[i][0].split(".").splice(0, 2) === ipstring.split(".").splice(0, 2)){
             funn = true;
             break;
         }
